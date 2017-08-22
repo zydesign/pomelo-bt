@@ -36,35 +36,43 @@ The parent node makes its decision based on the result code.
 The base class of all the composite nodes. A composite node has arbitrary child nodes and it has a `addChild` method to add child node.
   所有复合节点的基类。复合节点具有任意子节点，它有一个“addChild”方法来添加子节点。
 
-###Decorator 装饰者
+###Decorator 装饰节点   （控制节点）
 The base class of all the decorator nodes. A decorator node has the ability to decorate the result for its child node. A decorator node has only one child node and has a `setChild` method to set the child node.
 所有装饰器节点的基类。装饰节点有能力将其子节点的结果进行装饰。装饰节点只有一个子节点，并有一个“setChild”方法来设置子节点。
 
 Followings are some behavior node types provided in `pomelo-bt`.
 以下是“pomelo - bt”中提供的一些行为节点类型。
+1.序列   Sequence(opts) 
+2.并行   Parallel(opts）
+3.选择   Selector(opts)
 
-##Composite nodes  复合节点
+
+##Composite nodes  1.复合节点
 ###Sequence        复合序列函数---行为一个接一个执行
 Implementation of `sequence` semantics. “序列”语义的实现。
-####Sequence(opts)
+####Sequence(opts)   1.序列
 + opts.blackboard - blackboard instance for the behavior node.行为节点的blackboard实例。
 
-###Parallel  并行---行为是同时执行
+
+
+###Parallel  2.并行节点---行为是同时执行
 Implementation of parallel semantics. 实现并行的语义。
-####Parallel(opts)
+####Parallel(opts)   2.并行
 + opts.blackboard   （配置的黑板）- blackboard instance for the behavior node.
 + opts.policy        (配置的策略) - Failure strategy for Parallel node: `Parallel.POLICY_FAIL_ON_ONE`(default) return `RES_FAIL` if one child node fail, `Parallel.POLICY_FAIL_ON_ALL` return `RES_FAIL` only on all the child nodes fail.
   并行节点的失败策略:“Parallel . policy_fail_on_one”(默认)如果一个子节点失败，则返回“RES_FAIL”。POLICY_FAIL_ON_ALL ' return ' RES_FAIL '只在所有子节点上失败。
 
-###Selector   选择器
+
+
+###Selector  3. 选择节点
 Implementation of selector semantics.
-####Selector(opts)
+####Selector(opts)   3.选择
 + opts.blackboard - blackboard instance for the behavior node.
 
-###Decorator nodes   装饰节点
+###Decorator nodes   其他控制节点
 ###Loop  循环
 Implementation of loop semantics.
-####Loop(opts)
+####Loop(opts)   4.循环
 + opts.blackboard - blackboard instance for the behavior node.
 + opts.child   （配置的子节点）- child node for the decorator node。装饰节点的子节点
 + opts.loopCond(blackboard)   （配置的循环条件） - loop condition function. return true to continue the loop and false to break the loop.
@@ -74,7 +82,7 @@ Implementation of loop semantics.
 Return `RES_SUCESS` if the condition is true otherwise return `RES_FAIL`.
 如果条件为真，返回' RES_SUCESS '，如果条件为假，则返回' RES_FAIL '。
 
-####Condition(opts)
+####Condition(opts)  5.条件
 + opts.blackboard - blackboard instance for the behavior node.
 + opts.cond(blackboard) （配置的条件）- condition function, return true or false.
 
@@ -124,7 +132,7 @@ WorldNode.prototype.doAction = function() {
 //黑板
 var blackboard = {};
 
-// composite your behavior tree 创建一个复合队列
+// composite your behavior tree 创建一个序列类'控制节点
 var seq = new Sequence({blackboard: blackboard});
 var hello = new HelloNode(blackboard);
 var world = new WorldNode(blackboard);
@@ -133,5 +141,6 @@ seq.addChild(hello);
 seq.addChild(world);
 
 // run the behavior tree
+// 直接执行控制节点
 seq.doAction();
 ```
