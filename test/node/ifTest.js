@@ -2,9 +2,11 @@ var should = require('should');
 var bt = require('../../');
 var If = bt.If;
 
+//成立节点
 var SNode = function(bb) {
   this.blackboard = bb;
 };
+//成立节点的doAction
 SNode.prototype = {
   doAction: function() {
     this.blackboard.scount++;
@@ -12,9 +14,11 @@ SNode.prototype = {
   }
 };
 
+//失败节点
 var FNode = function(bb) {
   this.blackboard = bb;
 };
+//失败节点的doAction
 FNode.prototype = {
   doAction: function() {
     this.blackboard.fcount++;
@@ -22,9 +26,11 @@ FNode.prototype = {
   }
 };
 
+//等待节点
 var WNode = function(bb) {
   this.blackboard = bb;
 };
+//等待节点的doAction
 WNode.prototype = {
   doAction: function() {
     if(this.blackboard.wcount < 2) {
